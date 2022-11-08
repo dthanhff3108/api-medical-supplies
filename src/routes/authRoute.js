@@ -1,5 +1,6 @@
 import express from "express";
 import authController from "~/controllers/authController";
+import { verifyToken } from "~/middleware/verifyToken";
 import authValidation from "~/validations/authValidation";
 const router = express.Router();
 
@@ -11,5 +12,6 @@ router.post(
 
 router.post("/login", authController.loginUser);
 router.post("/refresh", authController.requestRefreshToken);
+router.post("/logout", verifyToken, authController.logoutUser);
 
 export const authRoute = router;
