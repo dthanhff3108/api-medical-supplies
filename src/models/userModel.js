@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
-      minlength: 10,
+      minlength: 5,
       maxlength: 40,
       unique: true,
     },
@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema(
     admin: {
       type: Boolean,
       default: false,
+    },
+    department: {
+      type: mongoose.Schema.Types.ObjectId,
+      default: null,
+      ref: "Department",
     },
   },
   { timestamps: true }

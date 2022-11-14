@@ -5,7 +5,7 @@ const authValidation = {
   registerUser: async (req, res, next) => {
     const condition = Joi.object({
       username: Joi.string().required().min(6).max(20),
-      email: Joi.string().required().min(10).max(40),
+      email: Joi.string().required().min(5).max(40),
       password: Joi.string().required().min(6),
       admin: Joi.boolean(),
     });
