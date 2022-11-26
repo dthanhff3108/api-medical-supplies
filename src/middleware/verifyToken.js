@@ -7,9 +7,7 @@ export const verifyToken = (req, res, next) => {
     const accessToken = token.split(" ")[1];
     jwt.verify(accessToken, "accesskey", (err, infoUser) => {
       if (err) {
-        return res
-          .status(HttpStatusCode.BAD_REQUEST)
-          .json("Token is not valid");
+        return res.status(HttpStatusCode.BAD_REQUEST).json(err);
       }
       //Add info token to req
       req.user = infoUser;

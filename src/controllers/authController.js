@@ -76,8 +76,6 @@ const authController = {
   // REFRESH TOKEN
   requestRefreshToken: async (req, res) => {
     const refreshToken = req.cookies.refreshToken;
-
-    console.log("cookies : ", req.cookies);
     if (!refreshToken) {
       return res
         .status(HttpStatusCode.UNAUTHORIZED)
