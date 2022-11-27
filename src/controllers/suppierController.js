@@ -24,6 +24,20 @@ const suppierController = {
       });
     }
   },
+  // Search Supplier
+  searchSupplier: async (req, res) => {
+    try {
+      const { q } = req.query;
+      const listSupplier = await Supplier.find({
+        name: { $regex: q, $options: "i" },
+      });
+      res.status(HttpStatusCode.OK).json(listSupplier);
+    } catch (err) {
+      res.status(HttpStatusCode.INTERNAL_SERVER).json({
+        message: err,
+      });
+    }
+  },
   // Create new Supplier
   createSupplier: async (req, res) => {
     try {
