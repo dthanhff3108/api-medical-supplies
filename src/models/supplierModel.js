@@ -20,7 +20,7 @@ const supplierSchema = new mongoose.Schema(
       type: String,
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true } }
 );
 const Supplier = mongoose.model("Supplier", supplierSchema);
 export default Supplier;

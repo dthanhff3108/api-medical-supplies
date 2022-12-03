@@ -1,19 +1,20 @@
-import mongoose from "mongoose";
+import mongoose, { Mongoose } from "mongoose";
 
 const departmentSchema = new mongoose.Schema(
   {
     name: {
       type: String,
       required: true,
-      minlength: 6,
+      minlength: 3,
       unique: true,
     },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      default: null,
+      ref: "Auth",
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true } }
 );
 const Department = mongoose.model("Department", departmentSchema);
 export default Department;

@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import Department from "~/models/DepartmentModel";
 import User from "~/models/userModel";
 import {
   generateAccessToken,
@@ -23,11 +24,16 @@ const authController = {
           .status(HttpStatusCode.INTERNAL_SERVER)
           .json("Email already taken");
       }
+
       const newUser = await new User({
         ...req.body,
         password: hashedPassword,
       });
+
       const user = await newUser.save();
+      await Department.findOneAndUpdate(user.department, {
+        owner: user._id,
+      });
       return res.status(HttpStatusCode.OK).json(user);
     } catch (err) {
       return res.status(HttpStatusCode.INTERNAL_SERVER).json({
@@ -64,7 +70,7 @@ const authController = {
         const { password, ...other } = user._doc;
         return res
           .status(HttpStatusCode.OK)
-          .json({ ...other, accessToken, refreshToken });
+          .json({ ...other, id: other._id, accessToken, refreshToken });
       }
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json({

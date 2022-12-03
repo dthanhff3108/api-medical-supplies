@@ -22,30 +22,13 @@ const supplySchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    unit_price: {
-      type: Number,
-      required: true,
-    },
-    model: {
-      type: String,
-      default: null,
-    },
     supplier: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: [Schema.Types.ObjectId],
       ref: "Supplier",
-      required: true,
-    },
-    manufacturer: {
-      type: String,
-      ref: "Supplier",
-      default: null,
-    },
-    inspection_date: {
-      type: String,
       required: true,
     },
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtuals: true } }
 );
 const Supply = mongoose.model("Supply", supplySchema);
 export default Supply;

@@ -8,6 +8,7 @@ const authValidation = {
       email: Joi.string().required().min(5).max(40),
       password: Joi.string().required().min(6),
       admin: Joi.boolean(),
+      department: Joi.string(),
     });
     try {
       await condition.validateAsync(req.body, { abortEarly: true });
