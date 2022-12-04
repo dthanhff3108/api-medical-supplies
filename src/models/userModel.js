@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
       ref: "Department",
     },
   },
-  { timestamps: true, toJSON: { virtuals: true } }
+  { timestamps: true }
 );
 const User = mongoose.model("User", userSchema);
 export default User;

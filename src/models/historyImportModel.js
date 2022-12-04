@@ -53,7 +53,7 @@ const historyImportSchema = new mongoose.Schema(
       default: null,
     },
   },
-  { timestamps: true, toJSON: { virtuals: true } }
+  { timestamps: true }
 );
 const HistoryImport = mongoose.model("HistoryImport", historyImportSchema);
 export default HistoryImport;

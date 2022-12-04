@@ -28,7 +28,7 @@ const supplySchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true, toJSON: { virtuals: true } }
+  { timestamps: true }
 );
 const Supply = mongoose.model("Supply", supplySchema);
 export default Supply;
