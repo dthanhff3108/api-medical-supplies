@@ -20,6 +20,7 @@ const departmentSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
   }
 );
 const Department = mongoose.model("Department", departmentSchema);
