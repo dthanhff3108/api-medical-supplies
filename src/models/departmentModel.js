@@ -8,6 +8,10 @@ const departmentSchema = new mongoose.Schema(
       minlength: 3,
       unique: true,
     },
+    location: {
+      type: String,
+      default: null,
+    },
     owner: {
       type: mongoose.Schema.Types.ObjectId,
       default: null,
