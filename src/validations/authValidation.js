@@ -7,7 +7,7 @@ const authValidation = {
       username: Joi.string().required().min(6).max(20),
       email: Joi.string().required().min(5).max(40),
       password: Joi.string().required().min(6),
-      admin: Joi.boolean(),
+      role: Joi.string().required(),
       department: Joi.string(),
     });
     try {
