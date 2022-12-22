@@ -12,13 +12,11 @@ const supplySchema = new mongoose.Schema(
       type: String,
       required: true,
       maxlength: 40,
-      unique: true,
     },
     quantity: {
       type: Number,
       required: true,
       maxlength: 40,
-      unique: true,
     },
     unit: {
       type: String,
