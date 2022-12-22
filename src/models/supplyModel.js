@@ -14,16 +14,12 @@ const supplySchema = new mongoose.Schema(
       maxlength: 40,
       unique: true,
     },
-    quantity: {
-      type: Number,
-      required: true,
-    },
     unit: {
       type: String,
       default: null,
     },
     supplier: {
-      type: [Schema.Types.ObjectId],
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "Supplier",
       required: true,
     },

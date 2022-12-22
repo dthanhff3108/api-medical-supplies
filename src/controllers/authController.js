@@ -114,6 +114,11 @@ const authController = {
     );
     return res.status(HttpStatusCode.OK).json("Logout success");
   },
+
+  checkToken: async (req, res) => {
+    console.log(req.headers.token);
+    return res.status(HttpStatusCode.OK).json("ok");
+  },
 };
 
 export default authController;
