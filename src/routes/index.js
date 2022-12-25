@@ -3,12 +3,11 @@ import { authRoute } from "./authRoute";
 import { departmentRoute } from "./departmentRoute";
 import { historyImportRoute } from "./historyImportRoute";
 import { supplierRoute } from "./supplierRoute";
-import { suppluRoute } from "./supplyRoute";
+import { supplyRoute } from "./supplyRoute";
 const router = express.Router();
 
-router.get("/status", (req, res) => res.json("OK"));
 router.use("/auth", authRoute);
-router.use("/supply", suppluRoute);
+router.use("/supply", supplyRoute);
 router.use("/department", departmentRoute);
 router.use("/supplier", supplierRoute);
 router.use("/history/import", historyImportRoute);

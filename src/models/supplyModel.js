@@ -2,25 +2,23 @@ import mongoose from "mongoose";
 
 const supplySchema = new mongoose.Schema(
   {
-    name: {
+    name_supply: {
       type: String,
-      required: true,
       maxlength: 40,
+      required: true,
       unique: true,
     },
-    type: {
+    type_supply: {
       type: String,
       required: true,
-      maxlength: 40,
     },
     quantity: {
       type: Number,
       required: true,
-      maxlength: 40,
     },
     unit: {
       type: String,
-      default: null,
+      required: true,
     },
     supplier: {
       type: [mongoose.Schema.Types.ObjectId],

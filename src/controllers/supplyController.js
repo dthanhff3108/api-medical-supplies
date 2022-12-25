@@ -47,6 +47,7 @@ const supplyController = {
       const supply = await newSupply.save();
       res.status(HttpStatusCode.OK).json(supply);
     } catch (err) {
+      console.log(err);
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
         message: err,
       });
@@ -73,6 +74,23 @@ const supplyController = {
       const deletedSupply = await Supply.findByIdAndDelete({ _id: id });
       res.status(HttpStatusCode.OK).json(deletedSupply);
     } catch (err) {
+      res.status(HttpStatusCode.INTERNAL_SERVER).json({
+        message: err,
+      });
+    }
+  },
+  // rtesst Supply
+  testPopulate: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const moreInfo = await Supply.findOne({ _id: id }).populate({
+        path: "supplier",
+        match: { phone: { $lte: 112111627371 } },
+        select: "name",
+      });
+      res.status(HttpStatusCode.OK).json(moreInfo);
+    } catch (err) {
+      console.log(err);
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
         message: err,
       });

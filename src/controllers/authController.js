@@ -119,6 +119,24 @@ const authController = {
     console.log(req.headers.token);
     return res.status(HttpStatusCode.OK).json("ok");
   },
+  // tesst user
+  testUser: async (req, res) => {
+    try {
+      const user = await User.findById(req.params.id).populate(
+        "department",
+        "namze"
+      );
+      // .exac((_, value) => {
+      //   console.log(value);
+      // });
+      res.status(HttpStatusCode.OK).json(user);
+    } catch (err) {
+      console.log(err);
+      res.status(HttpStatusCode.INTERNAL_SERVER).json({
+        message: err,
+      });
+    }
+  },
 };
 
 export default authController;

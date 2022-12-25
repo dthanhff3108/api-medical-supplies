@@ -23,6 +23,21 @@ const userController = {
       });
     }
   },
+  // tesst user
+  // testUser: async (req, res) => {
+  //   try {
+  //     const user = await (await User.findById(req.params.id))
+  //       .populated("department")
+  //       .exac((_, value) => {
+  //         console.log(value);
+  //       });
+  //     res.status(HttpStatusCode.OK).json(user);
+  //   } catch (err) {
+  //     res.status(HttpStatusCode.INTERNAL_SERVER).json({
+  //       message: err,
+  //     });
+  //   }
+  // },
 };
 
 export default userController;

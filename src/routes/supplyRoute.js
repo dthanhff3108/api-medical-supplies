@@ -8,5 +8,6 @@ router.get("/:id", supplyController.getOneSupply);
 router.post("/", supplyController.createSupply);
 router.patch("/", supplyController.updateSupply);
 router.delete("/:id", supplyController.deleteSupply);
+router.get("/test/:id", supplyController.testPopulate);
 
-export const suppluRoute = router;
+export const supplyRoute = router;
