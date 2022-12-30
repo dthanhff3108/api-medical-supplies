@@ -2,17 +2,15 @@ import mongoose from "mongoose";
 
 const planSchema = new mongoose.Schema(
   {
-    id: {
+    department: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
     },
-    plan: [
+    planData: [
       {
         name: {
           type: String,
           required: true,
-          maxlength: 40,
-          unique: true,
         },
         quantity: {
           type: Number,

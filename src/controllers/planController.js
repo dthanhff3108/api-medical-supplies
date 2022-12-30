@@ -7,6 +7,7 @@ const planImportController = {
       const newPlan = await planData.save();
       res.status(HttpStatusCode.OK).json(newPlan);
     } catch (err) {
+      console.log(err);
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
         message: err,
       });
