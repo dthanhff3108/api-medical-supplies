@@ -15,7 +15,7 @@ const planImportController = {
   },
   getAllPlan: async (req, res) => {
     try {
-      const listPlan = await Plan.find({});
+      const listPlan = await Plan.find({}).populate("department", "name");
       res.status(HttpStatusCode.OK).json(listPlan);
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
