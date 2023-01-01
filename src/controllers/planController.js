@@ -13,6 +13,17 @@ const planImportController = {
       });
     }
   },
+  getAllPlan: async (req, res) => {
+    try {
+      const listPlan = await Plan.find({});
+      res.status(HttpStatusCode.OK).json(listPlan);
+    } catch (err) {
+      console.log(err);
+      res.status(HttpStatusCode.INTERNAL_SERVER).json({
+        message: err,
+      });
+    }
+  },
 };
 
 export default planImportController;
