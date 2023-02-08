@@ -1,4 +1,4 @@
-import mongoose, { Mongoose } from "mongoose";
+import mongoose from "mongoose";
 
 const departmentSchema = new mongoose.Schema(
   {
@@ -12,9 +12,21 @@ const departmentSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-    owner: {
+    ownerInfo: {
       type: mongoose.Schema.Types.ObjectId,
       default: null,
+      ref: "Auth",
+    },
+    email: {
+      type: String,
+      required: true,
+    },
+    phoneNumber: {
+      type: String,
+      required: true,
+    },
+    staffs: {
+      type: [mongoose.Schema.Types.ObjectId],
       ref: "Auth",
     },
   },

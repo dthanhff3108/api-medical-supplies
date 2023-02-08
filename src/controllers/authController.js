@@ -25,7 +25,7 @@ const authController = {
           .json("Email already taken");
       }
 
-      const newUser = await new User({
+      const newUser = new User({
         ...req.body,
         password: hashedPassword,
       });
@@ -118,24 +118,6 @@ const authController = {
   checkToken: async (req, res) => {
     console.log(req.headers.token);
     return res.status(HttpStatusCode.OK).json("ok");
-  },
-  // tesst user
-  testUser: async (req, res) => {
-    try {
-      const user = await User.findById(req.params.id).populate(
-        "department",
-        "namze"
-      );
-      // .exac((_, value) => {
-      //   console.log(value);
-      // });
-      res.status(HttpStatusCode.OK).json(user);
-    } catch (err) {
-      console.log(err);
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
-    }
   },
 };
 

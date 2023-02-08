@@ -7,6 +7,16 @@ const planSchema = new mongoose.Schema(
       ref: "Department",
       required: true,
     },
+    note: {
+      type: String,
+    },
+    ownerName: {
+      type: String,
+    },
+    type: {
+      type: Number,
+      require: true,
+    },
     planData: [
       {
         name: {
@@ -18,6 +28,14 @@ const planSchema = new mongoose.Schema(
           required: true,
         },
         unit: {
+          type: String,
+          default: null,
+        },
+        type: {
+          type: String,
+          default: null,
+        },
+        model: {
           type: String,
           default: null,
         },

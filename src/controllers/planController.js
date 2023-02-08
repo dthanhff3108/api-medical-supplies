@@ -8,9 +8,7 @@ const planImportController = {
       const newPlan = await planData.save();
       res.status(HttpStatusCode.OK).json(newPlan);
     } catch (err) {
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
+      res.status(HttpStatusCode.INTERNAL_SERVER).json("Server Error");
     }
   },
   getAllPlan: async (req, res) => {
@@ -18,15 +16,15 @@ const planImportController = {
       const listPlan = await Plan.find({}).populate("department", "name");
       res.status(HttpStatusCode.OK).json(listPlan);
     } catch (err) {
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
+      res.status(HttpStatusCode.INTERNAL_SERVER).json("Server Error");
     }
   },
   sendIssue: async (req, res) => {
     try {
+      const { plan } = req.body;
       const createIssue = new Issue(req.body);
       const newIssue = await createIssue.save();
+      await Plan.findByIdAndDelete(plan);
       res.status(HttpStatusCode.OK).json(newIssue);
     } catch (err) {
       console.log(err);
