@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import autoIncrement from "mongoose-auto-increment";
 export const connect = async () => {
   await mongoose
     .connect(
@@ -13,3 +13,5 @@ export const connect = async () => {
     .catch((e) => console.log(e))
     .finally(() => {});
 };
+
+autoIncrement.initialize(mongoose.connection);

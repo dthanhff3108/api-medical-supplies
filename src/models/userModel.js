@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import autoIncrement from "mongoose-auto-increment";
 
 const userSchema = new mongoose.Schema(
   {
@@ -29,12 +30,27 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
     department: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       default: null,
       ref: "Department",
     },
   },
-  { timestamps: true, toJSON: { virtuals: true } }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        delete ret._id;
+      },
+      versionKey: false,
+    },
+  }
 );
+
+userSchema.plugin(autoIncrement.plugin, {
+  model: "User",
+  startAt: 1,
+});
+
 const User = mongoose.model("User", userSchema);
 export default User;

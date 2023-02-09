@@ -44,6 +44,8 @@ const authController = {
   loginUser: async (req, res) => {
     try {
       const user = await User.findOne({ username: req.body.username });
+      console.log(user);
+
       if (!user) {
         return res
           .status(HttpStatusCode.NOT_FOUND)
@@ -70,7 +72,7 @@ const authController = {
         const { password, ...other } = user._doc;
         return res
           .status(HttpStatusCode.OK)
-          .json({ ...other, id: other._id, accessToken, refreshToken });
+          .json({ ...other, accessToken, refreshToken });
       }
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json({

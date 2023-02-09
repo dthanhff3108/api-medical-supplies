@@ -1,5 +1,6 @@
+import { number } from "joi";
 import mongoose from "mongoose";
-
+import autoIncrement from "mongoose-auto-increment";
 const departmentSchema = new mongoose.Schema(
   {
     name: {
@@ -32,8 +33,17 @@ const departmentSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    toJSON: { virtuals: true },
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        delete ret._id;
+      },
+      versionKey: false,
+    },
   }
 );
+departmentSchema.plugin(autoIncrement.plugin, "Department");
+
 const Department = mongoose.model("Department", departmentSchema);
+
 export default Department;
