@@ -7,6 +7,6 @@ const router = express.Router();
 router.post("/:idDepartment", userController.createNewUser);
 router.get("/:idDepartment", userController.getAllUserInDepartment);
 // router.patch("/", userController.updateuser);
-// router.delete("/:id", userController.deleteuser);
+router.delete("/:idDepartment", userController.deleteStaff);
 
 export const userRoute = router;

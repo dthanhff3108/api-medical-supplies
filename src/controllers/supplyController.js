@@ -1,10 +1,31 @@
 import Supply from "~/models/supplyModel";
 import { HttpStatusCode } from "~/utilities/statusResponse";
+import { pickQuery } from "~/utilities/functionsHelper";
 const supplyController = {
   // Get All Supply
   getAllSupply: async (req, res) => {
+    const options = pickQuery(req.query, [
+      "dangerLevel",
+      "type",
+      "page",
+      "sortBy",
+    ]);
+    console.log(options);
+    const sortQuery =
+      options.sortBy && options.sortBy === "asc"
+        ? 1
+        : options.sortBy && options.sortBy === "desc"
+        ? -1
+        : 0;
+    const offsetPage = options.page ? Number(options.page) * 10 : 0;
     try {
-      const listSupply = await Supply.find({});
+      const listSupply = await Supply.find(options)
+        .sort({
+          createdAt: sortQuery,
+        })
+        .skip(offsetPage)
+        .limit(10);
+      console.log(listSupply.length);
       res.status(HttpStatusCode.OK).json(listSupply);
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
@@ -12,18 +33,7 @@ const supplyController = {
       });
     }
   },
-  // Get One Supply
-  getOneSupply: async (req, res) => {
-    try {
-      const id = req.params.id;
-      const detailSupply = await Supply.findById(id);
-      res.status(HttpStatusCode.OK).json(detailSupply);
-    } catch (err) {
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
-    }
-  },
+
   // Search Supply
   searchSupply: async (req, res) => {
     try {

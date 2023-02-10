@@ -1,4 +1,3 @@
-import { number } from "joi";
 import mongoose from "mongoose";
 import autoIncrement from "mongoose-auto-increment";
 const departmentSchema = new mongoose.Schema(
@@ -42,7 +41,10 @@ const departmentSchema = new mongoose.Schema(
     },
   }
 );
-departmentSchema.plugin(autoIncrement.plugin, "Department");
+departmentSchema.plugin(autoIncrement.plugin, {
+  model: "Department",
+  startAt: 1,
+});
 
 const Department = mongoose.model("Department", departmentSchema);
 

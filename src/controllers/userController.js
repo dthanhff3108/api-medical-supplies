@@ -8,10 +8,13 @@ const userController = {
     try {
       const idDepartment = req.params.idDepartment;
       const users = await User.find({ department: idDepartment });
+      console.log(users);
       const dataUsers = users.map((u) => ({
+        id: u.id,
         name: u.name,
         email: u.email,
-        id: u.id,
+        role: u.role,
+        username: u.username,
       }));
       res.status(HttpStatusCode.OK).json(dataUsers);
     } catch (err) {
@@ -54,10 +57,18 @@ const userController = {
     }
   },
   // Delete user
-  deleteUser: async (req, res) => {
+  deleteStaff: async (req, res) => {
+    const staffId = req.body.staffId;
+    const departmentId = req.params.idDepartment;
     try {
-      const user = await User.findById(req.params.id);
-      res.status(HttpStatusCode.OK).json(user);
+      const user = await User.findOne({ id: staffId });
+      if (user.department === departmentId && user.role === "staff") {
+        await User.deleteOne({ id: staffId });
+        return res.status(HttpStatusCode.OK).json();
+      }
+      return res
+        .status(HttpStatusCode.FORBIDDEN)
+        .json("Not allowed to do this action");
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
         message: err,

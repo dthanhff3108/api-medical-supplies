@@ -1,4 +1,5 @@
 import Department from "~/models/DepartmentModel";
+import User from "~/models/userModel";
 import { HttpStatusCode } from "~/utilities/statusResponse";
 const departmentController = {
   // Get All Department
@@ -70,6 +71,7 @@ const departmentController = {
   deleteDepartment: async (req, res) => {
     try {
       const id = req.params.id;
+      await User.updateMany({ department: id }, { department: null });
       const deletedDepartment = await Department.findByIdAndDelete({ _id: id });
       res.status(HttpStatusCode.OK).json(deletedDepartment);
     } catch (err) {
