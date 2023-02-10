@@ -10,13 +10,12 @@ const supplyController = {
       "page",
       "sortBy",
     ]);
-    console.log(options);
     const sortQuery =
       options.sortBy && options.sortBy === "asc"
         ? 1
         : options.sortBy && options.sortBy === "desc"
         ? -1
-        : 0;
+        : 1;
     const offsetPage = options.page ? Number(options.page) * 10 : 0;
     try {
       const listSupply = await Supply.find(options)
@@ -25,7 +24,6 @@ const supplyController = {
         })
         .skip(offsetPage)
         .limit(10);
-      console.log(listSupply.length);
       res.status(HttpStatusCode.OK).json(listSupply);
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
@@ -34,20 +32,6 @@ const supplyController = {
     }
   },
 
-  // Search Supply
-  searchSupply: async (req, res) => {
-    try {
-      const { q } = req.query;
-      const listSupply = await Supply.find({
-        name: { $regex: q, $options: "i" },
-      });
-      res.status(HttpStatusCode.OK).json(listSupply);
-    } catch (err) {
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
-    }
-  },
   // Create new Supply
   createSupply: async (req, res) => {
     try {
@@ -84,23 +68,6 @@ const supplyController = {
       const deletedSupply = await Supply.findByIdAndDelete({ _id: id });
       res.status(HttpStatusCode.OK).json(deletedSupply);
     } catch (err) {
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
-    }
-  },
-  // rtesst Supply
-  testPopulate: async (req, res) => {
-    try {
-      const id = req.params.id;
-      const moreInfo = await Supply.findOne({ _id: id }).populate({
-        path: "supplier",
-        match: { phone: { $lte: 112111627371 } },
-        select: "name",
-      });
-      res.status(HttpStatusCode.OK).json(moreInfo);
-    } catch (err) {
-      console.log(err);
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
         message: err,
       });

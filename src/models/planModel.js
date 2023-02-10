@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
+import autoIncrement from "mongoose-auto-increment";
 
 const planSchema = new mongoose.Schema(
   {
     department: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Number,
       ref: "Department",
       required: true,
     },
@@ -12,10 +13,11 @@ const planSchema = new mongoose.Schema(
     },
     ownerName: {
       type: String,
+      required: true,
     },
-    type: {
+    planType: {
       type: Number,
-      require: true,
+      required: true,
     },
     planData: [
       {
@@ -39,10 +41,31 @@ const planSchema = new mongoose.Schema(
           type: String,
           default: null,
         },
+        serial: {
+          type: String,
+          default: null,
+        },
+        origin: {
+          type: String,
+          default: null,
+        },
       },
     ],
   },
-  { timestamps: true, toJSON: { virtuals: true } }
+  {
+    timestamps: true,
+    toJSON: {
+      virtuals: true,
+      transform: function (doc, ret) {
+        delete ret._id;
+      },
+      versionKey: false,
+    },
+  }
 );
+planSchema.plugin(autoIncrement.plugin, {
+  model: "Plan",
+  startAt: 1,
+});
 const Plan = mongoose.model("Plan", planSchema);
 export default Plan;

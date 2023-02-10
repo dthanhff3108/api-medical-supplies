@@ -13,7 +13,7 @@ const departmentSchema = new mongoose.Schema(
       default: null,
     },
     ownerInfo: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Number,
       default: null,
       ref: "Auth",
     },
@@ -26,7 +26,7 @@ const departmentSchema = new mongoose.Schema(
       required: true,
     },
     staffs: {
-      type: [mongoose.Schema.Types.ObjectId],
+      type: [Number],
       ref: "Auth",
     },
   },
