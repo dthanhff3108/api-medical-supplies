@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema(
       default: null,
       ref: "Department",
     },
+    position: {
+      type: String,
+      default: null,
+    },
   },
   {
     timestamps: true,
