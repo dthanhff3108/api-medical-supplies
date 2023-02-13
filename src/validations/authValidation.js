@@ -10,6 +10,7 @@ const authValidation = {
       name: Joi.string().required().min(1),
       role: Joi.string().required(),
       department: Joi.string(),
+      position: Joi.string(),
     });
     try {
       await condition.validateAsync(req.body, { abortEarly: true });
