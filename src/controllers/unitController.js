@@ -1,17 +1,18 @@
 import Unit from "~/models/unitModel";
 import { pickQuery } from "~/utilities/functionsHelper";
+import { handleErrorResponse } from "~/utilities/handleError";
 import { HttpStatusCode } from "~/utilities/statusResponse";
 const unitController = {
-  createNewUnit: async (req, res) => {
+  createNewUnit: async (req, res, next) => {
     try {
       const unitData = new Unit(req.body);
       const newUnit = await unitData.save();
       res.status(HttpStatusCode.OK).json(newUnit);
     } catch (err) {
-      console.log(err);
-      res.status(HttpStatusCode.INTERNAL_SERVER).json("Server Error");
+      handleErrorResponse(res, err, "Unit");
     }
   },
+  // GET LIST UNIT
   getListUnit: async (req, res) => {
     try {
       const options = pickQuery(req.query, ["page", "search", "sort"]);
@@ -22,7 +23,6 @@ const unitController = {
           ? -1
           : 1;
       const offsetPage = options.page ? Number(options.page) * 10 : 0;
-      console.log(offsetPage);
       const listUnit = await Unit.find({})
         .sort({
           createdAt: sortQuery,
@@ -32,6 +32,16 @@ const unitController = {
       res.status(HttpStatusCode.OK).json(listUnit);
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json("Server Error");
+    }
+  },
+  // DELETE AN UNIT
+  deleteUnit: async (req, res) => {
+    try {
+      const idUnit = req.params.idUnit;
+      const del = await Unit.findByIdAndDelete(idUnit);
+      return res.status(HttpStatusCode.OK).json(del);
+    } catch (err) {
+      handleErrorResponse(res, err, "Unit");
     }
   },
 };
