@@ -68,6 +68,7 @@ const authController = {
           path: "/",
           sameSite: "strict",
         });
+        console.log(user);
         const { password, ...other } = user._doc;
         return res
           .status(HttpStatusCode.OK)
