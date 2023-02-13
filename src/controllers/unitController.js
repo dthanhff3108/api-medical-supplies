@@ -22,14 +22,23 @@ const unitController = {
           : options.sort && options.sort === "desc"
           ? -1
           : 1;
-      const offsetPage = options.page ? Number(options.page) * 10 : 0;
+      const offsetPage =
+        options.page == "1" ? 0 : (Number(options.page) - 1) * 10;
       const listUnit = await Unit.find({})
         .sort({
           createdAt: sortQuery,
         })
         .skip(offsetPage)
         .limit(10);
-      res.status(HttpStatusCode.OK).json(listUnit);
+      const listSupplyNotPagination = await Supply.find(options)
+        .sort({
+          createdAt: sortQuery,
+        })
+        .limit(0);
+      res.status(HttpStatusCode.OK).json({
+        data: listUnit,
+        total: listSupplyNotPagination.length,
+      });
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json("Server Error");
     }
