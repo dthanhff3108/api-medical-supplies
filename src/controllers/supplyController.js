@@ -16,7 +16,8 @@ const supplyController = {
         : options.sortBy && options.sortBy === "desc"
         ? -1
         : 1;
-    const offsetPage = options.page ? Number(options.page) * 10 : 0;
+    const offsetPage =
+      options.page == "1" ? 0 : (Number(options.page) - 1) * 10;
     try {
       const listSupply = await Supply.find(options)
         .sort({
@@ -24,7 +25,16 @@ const supplyController = {
         })
         .skip(offsetPage)
         .limit(10);
-      res.status(HttpStatusCode.OK).json(listSupply);
+
+      const listSupplyNotPagination = await Supply.find(options)
+        .sort({
+          createdAt: sortQuery,
+        })
+        .limit(0);
+      res.status(HttpStatusCode.OK).json({
+        data: listSupply,
+        total: listSupplyNotPagination.length,
+      });
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
         message: err,
