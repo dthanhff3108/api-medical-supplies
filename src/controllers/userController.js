@@ -15,6 +15,7 @@ const userController = {
         email: u.email,
         role: u.role,
         username: u.username,
+        position: u.position,
       }));
       res.status(HttpStatusCode.OK).json(dataUsers);
     } catch (err) {
