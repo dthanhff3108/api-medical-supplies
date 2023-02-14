@@ -43,8 +43,8 @@ const authController = {
   },
   loginUser: async (req, res) => {
     try {
-      const user = await User.findOne({ username: req.body.username });
-
+      const user = await User.find({ username: req.body.username });
+      console.log(user);
       if (!user) {
         return res
           .status(HttpStatusCode.NOT_FOUND)
@@ -68,7 +68,6 @@ const authController = {
           path: "/",
           sameSite: "strict",
         });
-        console.log(user);
         const { password, ...other } = user._doc;
         return res
           .status(HttpStatusCode.OK)

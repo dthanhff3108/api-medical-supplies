@@ -14,6 +14,7 @@ const unitController = {
   },
   // GET LIST UNIT
   getListUnit: async (req, res) => {
+    const actPagination = req.body.pagination ?? true;
     try {
       const options = pickQuery(req.query, ["page", "search", "sort"]);
       const sortQuery =
@@ -30,14 +31,14 @@ const unitController = {
         })
         .skip(offsetPage)
         .limit(10);
-      const listSupplyNotPagination = await Unit.find(options)
+      const listUnitNotPagination = await Unit.find(options)
         .sort({
           createdAt: sortQuery,
         })
         .limit(0);
       res.status(HttpStatusCode.OK).json({
-        data: listUnit,
-        total: listSupplyNotPagination.length,
+        data: actPagination ? listUnit : listUnitNotPagination,
+        total: listUnitNotPagination.length,
       });
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json("Server Error");
@@ -47,8 +48,8 @@ const unitController = {
   deleteUnit: async (req, res) => {
     try {
       const idUnit = req.params.idUnit;
-      const del = await Unit.findByIdAndDelete(idUnit);
-      return res.status(HttpStatusCode.OK).json(del);
+      await Unit.findByIdAndDelete(idUnit);
+      return res.status(HttpStatusCode.OK).json();
     } catch (err) {
       handleErrorResponse(res, err, "Unit");
     }
