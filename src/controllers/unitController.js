@@ -30,7 +30,7 @@ const unitController = {
         })
         .skip(offsetPage)
         .limit(10);
-      const listSupplyNotPagination = await Supply.find(options)
+      const listSupplyNotPagination = await Unit.find(options)
         .sort({
           createdAt: sortQuery,
         })
