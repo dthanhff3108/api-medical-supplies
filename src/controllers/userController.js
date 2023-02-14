@@ -61,9 +61,9 @@ const userController = {
     const staffId = req.body.staffId;
     const departmentId = req.params.idDepartment;
     try {
-      const user = await User.findOne({ id: staffId });
-      if (user.department === departmentId && user.role === "staff") {
-        await User.deleteOne({ id: staffId });
+      const user = await User.findOne({ _id: staffId });
+      if (user.department == departmentId && user.role === "staff") {
+        await User.deleteOne({ _id: staffId });
         return res.status(HttpStatusCode.OK).json();
       }
       return res
