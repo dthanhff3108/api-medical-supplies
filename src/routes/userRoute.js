@@ -12,6 +12,6 @@ router.get(
   userController.getAllUserInDepartment
 );
 // router.patch("/", userController.updateuser);
-router.delete("/:idDepartment", userController.deleteStaff);
+router.delete("/:idDepartment", verifyToken, userController.deleteStaff);
 
 export const userRoute = router;

@@ -57,6 +57,8 @@ const userController = {
   },
   // Delete user
   deleteStaff: async (req, res) => {
+    const infoUser = req.infoUser;
+    console.log("del", infoUser);
     const staffId = req.body.staffId;
     const departmentId = req.params.idDepartment;
     const aToken = decodeAccessToken(req.headers.authorization.split(" ")[1]);

@@ -9,6 +9,7 @@ export const verifyToken = (req, res, next) => {
       if (err) {
         return res.status(HttpStatusCode.BAD_REQUEST).json("Token expired");
       }
+      req.infoUser = infoUser;
       next();
     });
   } else {

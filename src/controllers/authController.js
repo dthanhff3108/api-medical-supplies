@@ -64,12 +64,6 @@ const authController = {
       if (user && validPassword) {
         const accessToken = generateAccessToken(user);
         const refreshToken = generateRefreshToken(user);
-        res.cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          secure: false,
-          path: "/",
-          sameSite: "strict",
-        });
         const { password, ...other } = user._doc;
         return res
           .status(HttpStatusCode.OK)
@@ -98,6 +92,7 @@ const authController = {
       }
       // Should be check this refreshToken is includes in my list refreshToken
       // Create new access Token
+      console.log("info", infoUser);
       const newAccessToken = generateAccessToken(infoUser);
       const newRefreshToken = generateRefreshToken(infoUser);
       return res

@@ -59,7 +59,6 @@ const supplyController = {
       const supply = await newSupply.save();
       res.status(HttpStatusCode.OK).json(supply);
     } catch (err) {
-      console.log(err);
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
         message: err,
       });
