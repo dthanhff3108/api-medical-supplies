@@ -41,7 +41,15 @@ const supplyController = {
       });
     }
   },
-
+  // Get All Supply Disbled Pagination
+  getAllSupplyDisabledPagination: async (req, res) => {
+    try {
+      const listAllSupplyDisabledPagination = await Supply.find({});
+      res.status(HttpStatusCode.OK).json(listAllSupplyDisabledPagination);
+    } catch (e) {
+      res.status(HttpStatusCode.INTERNAL_SERVER).json("Server error");
+    }
+  },
   // Create new Supply
   createSupply: async (req, res) => {
     try {

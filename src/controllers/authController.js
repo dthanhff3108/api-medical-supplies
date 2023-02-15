@@ -25,8 +25,12 @@ const authController = {
           .json("Email already taken");
       }
 
+      const dataCreateUser = { ...req.body };
+      if (req.body.role === "department") {
+        dataCreateUser.role === "owner";
+      }
       const newUser = new User({
-        ...req.body,
+        ...dataCreateUser,
         password: hashedPassword,
       });
 
@@ -36,15 +40,13 @@ const authController = {
       });
       return res.status(HttpStatusCode.OK).json(user);
     } catch (err) {
-      return res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
+      return res.status(HttpStatusCode.INTERNAL_SERVER).json();
     }
   },
   loginUser: async (req, res) => {
     try {
       const user = await User.findOne({ username: req.body.username });
-
+      console.log(user);
       if (!user) {
         return res
           .status(HttpStatusCode.NOT_FOUND)
@@ -68,7 +70,6 @@ const authController = {
           path: "/",
           sameSite: "strict",
         });
-        console.log(user);
         const { password, ...other } = user._doc;
         return res
           .status(HttpStatusCode.OK)
@@ -83,7 +84,7 @@ const authController = {
 
   // REFRESH TOKEN
   requestRefreshToken: async (req, res) => {
-    const refreshToken = req.cookies.refreshToken;
+    const refreshToken = req.body.refreshToken;
     if (!refreshToken) {
       return res
         .status(HttpStatusCode.UNAUTHORIZED)
@@ -91,20 +92,17 @@ const authController = {
     }
     jwt.verify(refreshToken, "reservekey", (err, infoUser) => {
       if (err) {
-        console.log(err);
+        return res
+          .status(HttpStatusCode.UNAUTHORIZED)
+          .json("You Are Not authenticated");
       }
       // Should be check this refreshToken is includes in my list refreshToken
       // Create new access Token
       const newAccessToken = generateAccessToken(infoUser);
       const newRefreshToken = generateRefreshToken(infoUser);
-      res.cookie("refreshToken", newRefreshToken, {
-        httpOnly: true,
-        path: "/",
-        sameSite: "strict",
-      });
       return res
         .status(HttpStatusCode.OK)
-        .json({ accessToken: newAccessToken });
+        .json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
     });
   },
   // LOGOUT

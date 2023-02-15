@@ -1,14 +1,13 @@
 import User from "~/models/userModel";
-import Department from "~/models/DepartmentModel";
 import bcrypt from "bcrypt";
 import { HttpStatusCode } from "~/utilities/statusResponse";
+import { decodeAccessToken } from "~/utilities/decodeToken";
 const userController = {
   // Get all user
   getAllUserInDepartment: async (req, res) => {
     try {
       const idDepartment = req.params.idDepartment;
       const users = await User.find({ department: idDepartment });
-      console.log(users);
       const dataUsers = users.map((u) => ({
         id: u.id,
         name: u.name,
@@ -19,7 +18,6 @@ const userController = {
       }));
       res.status(HttpStatusCode.OK).json(dataUsers);
     } catch (err) {
-      console.log(err);
       res.status(HttpStatusCode.INTERNAL_SERVER).json({
         message: err,
       });
@@ -61,12 +59,14 @@ const userController = {
   deleteStaff: async (req, res) => {
     const staffId = req.body.staffId;
     const departmentId = req.params.idDepartment;
+    const aToken = decodeAccessToken(req.headers.authorization.split(" ")[1]);
+    console.log(aToken);
     try {
       const user = await User.findOne({ _id: staffId });
-      if (user.department == departmentId && user.role === "staff") {
-        await User.deleteOne({ _id: staffId });
-        return res.status(HttpStatusCode.OK).json();
-      }
+      // if (user.department == departmentId && user.role === "staff") {
+      //   await User.deleteOne({ _id: staffId });
+      //   return res.status(HttpStatusCode.OK).json();
+      // }
       return res
         .status(HttpStatusCode.FORBIDDEN)
         .json("Not allowed to do this action");

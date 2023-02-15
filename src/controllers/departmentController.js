@@ -1,4 +1,5 @@
 import Department from "~/models/DepartmentModel";
+import StoreDepartment from "~/models/storeDepartmentModel";
 import User from "~/models/userModel";
 import { HttpStatusCode } from "~/utilities/statusResponse";
 const departmentController = {
@@ -46,6 +47,11 @@ const departmentController = {
         ...req.body,
       });
       const department = await newDepartment.save();
+      const createStore = new StoreDepartment({
+        idDepartment: department.id,
+        storeData: [],
+      });
+      await createStore.save();
       res.status(HttpStatusCode.OK).json(department);
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json({

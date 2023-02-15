@@ -2,15 +2,13 @@ import jwt from "jsonwebtoken";
 import { HttpStatusCode } from "~/utilities/statusResponse";
 
 export const verifyToken = (req, res, next) => {
-  const token = req.headers.token;
+  const token = req.headers.authorization;
   if (token) {
     const accessToken = token.split(" ")[1];
     jwt.verify(accessToken, "accesskey", (err, infoUser) => {
       if (err) {
-        return res.status(HttpStatusCode.BAD_REQUEST).json(err);
+        return res.status(HttpStatusCode.BAD_REQUEST).json("Token expired");
       }
-      //Add info token to req
-      req.user = infoUser;
       next();
     });
   } else {
