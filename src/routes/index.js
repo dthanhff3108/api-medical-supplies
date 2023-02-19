@@ -7,6 +7,7 @@ import { supplyRoute } from "./supplyRoute";
 import { userRoute } from "./userRoute";
 import { unitRoute } from "./unitRoute";
 import { storeDepartmentRoute } from "./storeDepartmentRoute";
+import { dashboardRoute } from "./dashboardRoute";
 const router = express.Router();
 
 router.use("/auth", authRoute);
@@ -17,5 +18,6 @@ router.use("/supplier", supplierRoute);
 router.use("/plan-department", planRoute);
 router.use("/unit", unitRoute);
 router.use("/store-department", storeDepartmentRoute);
+router.use("/dashboard", dashboardRoute);
 
 export const apiV1 = router;

@@ -11,41 +11,15 @@ const planImportController = {
       res.status(HttpStatusCode.INTERNAL_SERVER).json("Server Error");
     }
   },
-  getAllPlan: async (req, res) => {
+  getMonthlyPlan: async (req, res) => {
     try {
-      const listPlan = await Plan.find({}).populate("department", [
+      const listPlan = await Plan.find({ planType: 3 }).populate("department", [
         "name",
         "email",
       ]);
       res.status(HttpStatusCode.OK).json(listPlan);
     } catch (err) {
       res.status(HttpStatusCode.INTERNAL_SERVER).json("Server Error");
-    }
-  },
-  sendIssue: async (req, res) => {
-    try {
-      const { plan } = req.body;
-      const createIssue = new Issue(req.body);
-      const newIssue = await createIssue.save();
-      await Plan.findByIdAndDelete(plan);
-      res.status(HttpStatusCode.OK).json(newIssue);
-    } catch (err) {
-      console.log(err);
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
-    }
-  },
-  getIssue: async (req, res) => {
-    try {
-      const { id: idDepartment } = req.params;
-      const findIssue = await Issue.find({ to: idDepartment });
-      res.status(HttpStatusCode.OK).json(findIssue);
-    } catch (err) {
-      console.log(err);
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
     }
   },
 };
