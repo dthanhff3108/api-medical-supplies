@@ -46,7 +46,6 @@ const authController = {
   loginUser: async (req, res) => {
     try {
       const user = await User.findOne({ username: req.body.username });
-      console.log(user);
       if (!user) {
         return res
           .status(HttpStatusCode.NOT_FOUND)
@@ -90,9 +89,7 @@ const authController = {
           .status(HttpStatusCode.UNAUTHORIZED)
           .json("You Are Not authenticated");
       }
-      // Should be check this refreshToken is includes in my list refreshToken
       // Create new access Token
-      console.log("info", infoUser);
       const newAccessToken = generateAccessToken(infoUser);
       const newRefreshToken = generateRefreshToken(infoUser);
       return res
@@ -102,17 +99,11 @@ const authController = {
   },
   // LOGOUT
   logoutUser: async (req, res) => {
-    res.clearCookie("refreshToken");
     // Delete accessToken in FE
     refreshTokens = refreshTokens.filter(
       (token) => token !== req.cookies.refreshToken
     );
     return res.status(HttpStatusCode.OK).json("Logout success");
-  },
-
-  checkToken: async (req, res) => {
-    console.log(req.headers.token);
-    return res.status(HttpStatusCode.OK).json("ok");
   },
 };
 

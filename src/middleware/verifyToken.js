@@ -7,7 +7,7 @@ export const verifyToken = (req, res, next) => {
     const accessToken = token.split(" ")[1];
     jwt.verify(accessToken, "accesskey", (err, infoUser) => {
       if (err) {
-        return res.status(HttpStatusCode.BAD_REQUEST).json("Token expired");
+        return res.status(HttpStatusCode.UNAUTHORIZED).json("Token expired");
       }
       req.infoUser = infoUser;
       next();
@@ -17,12 +17,12 @@ export const verifyToken = (req, res, next) => {
   }
 };
 
-export const verifyTokenAndAdminAuth = (req, res, next) => {
+export const verifyTokenManagement = (req, res, next) => {
   verifyToken(req, res, () => {
-    if (req.user.id === req.params.id || req.user.admin) {
+    if (req.infoUser.role === "management") {
       next();
     } else {
-      return res.status(HttpStatusCode.UNAUTHORIZED).json("Not allowed");
+      return res.status(HttpStatusCode.UNAUTHORIZED).json("Not allowed ");
     }
   });
 };

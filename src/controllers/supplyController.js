@@ -1,6 +1,8 @@
 import Supply from "~/models/supplyModel";
 import { HttpStatusCode } from "~/utilities/statusResponse";
 import { pickQuery } from "~/utilities/functionsHelper";
+import { handleErrorResponse } from "~/utilities/handleError";
+
 const supplyController = {
   // Get All Supply
   getAllSupply: async (req, res) => {
@@ -59,9 +61,7 @@ const supplyController = {
       const supply = await newSupply.save();
       res.status(HttpStatusCode.OK).json(supply);
     } catch (err) {
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
+      handleErrorResponse(res, err, "Supply");
     }
   },
   // Update Supply
@@ -73,9 +73,7 @@ const supplyController = {
       });
       res.status(HttpStatusCode.OK).json(updateSupply);
     } catch (err) {
-      res.status(HttpStatusCode.INTERNAL_SERVER).json({
-        message: err,
-      });
+      handleErrorResponse(res, err, "Supply");
     }
   },
   // delete Supply

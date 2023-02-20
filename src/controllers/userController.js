@@ -58,17 +58,13 @@ const userController = {
   // Delete user
   deleteStaff: async (req, res) => {
     const infoUser = req.infoUser;
-    console.log("del", infoUser);
-    const staffId = req.body.staffId;
-    const departmentId = req.params.idDepartment;
-    const aToken = decodeAccessToken(req.headers.authorization.split(" ")[1]);
-    console.log(aToken);
+    const staffId = req.params.staffId;
     try {
-      const user = await User.findOne({ _id: staffId });
-      // if (user.department == departmentId && user.role === "staff") {
-      //   await User.deleteOne({ _id: staffId });
-      //   return res.status(HttpStatusCode.OK).json();
-      // }
+      const staff = await User.findOne({ _id: staffId });
+      if (staff.department === infoUser.department && staff.role === "staff") {
+        const userdel = await User.findOneAndDelete({ _id: staffId });
+        return res.status(HttpStatusCode.OK).json(userdel);
+      }
       return res
         .status(HttpStatusCode.FORBIDDEN)
         .json("Not allowed to do this action");
