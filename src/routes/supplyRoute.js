@@ -1,6 +1,6 @@
 import express from "express";
 import supplyController from "~/controllers/supplyController";
-import { verifyTokenManagement } from "~/middleware/verifyToken";
+import { verifyTokenManagement, verifyToken } from "~/middleware/verifyToken";
 const router = express.Router();
 
 router.get("/", supplyController.getAllSupply);

@@ -25,14 +25,6 @@ const planSchema = new mongoose.Schema(
           type: String,
           required: true,
         },
-        quantity: {
-          type: Number,
-          required: true,
-        },
-        unit: {
-          type: String,
-          default: null,
-        },
         type: {
           type: String,
           default: null,
@@ -45,9 +37,17 @@ const planSchema = new mongoose.Schema(
           type: String,
           default: null,
         },
+        unit: {
+          type: String,
+          default: null,
+        },
         origin: {
           type: String,
           default: null,
+        },
+        quantity: {
+          type: Number,
+          required: true,
         },
       },
     ],
