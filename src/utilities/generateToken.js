@@ -8,7 +8,7 @@ export const generateAccessToken = (user) => {
     },
     "accesskey",
     {
-      expiresIn: "1d",
+      expiresIn: "10s",
     }
   );
 };

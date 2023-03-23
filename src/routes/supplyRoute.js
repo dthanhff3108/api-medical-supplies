@@ -3,7 +3,7 @@ import supplyController from "~/controllers/supplyController";
 import { verifyTokenManagement, verifyToken } from "~/middleware/verifyToken";
 const router = express.Router();
 
-router.get("/", supplyController.getAllSupply);
+router.get("/", verifyTokenManagement, supplyController.getAllSupply);
 router.get("/all", supplyController.getAllSupplyDisabledPagination);
 router.post("/", verifyTokenManagement, supplyController.createSupply);
 router.patch("/", verifyTokenManagement, supplyController.updateSupply);
