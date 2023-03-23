@@ -22,12 +22,4 @@ app.listen(port, baseUrl, () => {
   console.log("Server is running in Port 8001");
 });
 app.use("/v1", apiV1);
-// module.exports.handler = serverless(app);
-// module.exports.handler = async (event, context) => {
-//   const result = await serverlessExpress({
-//     app,
-//     event,
-//     context,
-//   });
-//   return result;
-// };
+
