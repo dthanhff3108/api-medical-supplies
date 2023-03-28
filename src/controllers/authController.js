@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import Department from "~/models/DepartmentModel";
+import Department from "~/models/departmentModel";
 import User from "~/models/userModel";
 import {
   generateAccessToken,

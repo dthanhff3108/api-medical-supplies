@@ -1,4 +1,4 @@
-import Department from "~/models/DepartmentModel";
+import Department from "~/models/departmentModel";
 import StoreDepartment from "~/models/storeDepartmentModel";
 import User from "~/models/userModel";
 import { HttpStatusCode } from "~/utilities/statusResponse";

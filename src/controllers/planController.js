@@ -13,7 +13,7 @@ const planImportController = {
   },
   getMonthlyPlan: async (req, res) => {
     try {
-      const listPlan = await Plan.find({ planType: 3 }).populate("department", [
+      const listPlan = await Plan.find({ planType: 3 }).populate("Department", [
         "name",
         "email",
       ]);

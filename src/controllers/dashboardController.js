@@ -1,7 +1,7 @@
 import Unit from "~/models/unitModel";
 import { pickQuery } from "~/utilities/functionsHelper";
 import { HttpStatusCode } from "~/utilities/statusResponse";
-import Department from "~/models/DepartmentModel";
+import Department from "~/models/departmentModel";
 import Supplier from "~/models/supplierModel";
 import Supply from "~/models/supplyModel";
 const dashboardController = {

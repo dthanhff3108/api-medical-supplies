@@ -41,10 +41,6 @@ const departmentSchema = new mongoose.Schema(
     },
   }
 );
-departmentSchema.plugin(autoIncrement.plugin, {
-  model: "Department",
-  startAt: 1,
-});
 
 const Department = mongoose.model("Department", departmentSchema);
 
